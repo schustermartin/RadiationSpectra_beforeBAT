@@ -1,5 +1,5 @@
-name = "RadiationSpectra"
-uuid = "4f207c7e-01da-51d7-a1a0-c8c06dd1d883"
+name = "RadiationSpectra_beforeBAT"
+uuid = "9358e1d9-e4dd-4829-8c76-fed8cb87284b"
 version = "0.4.3"
 
 [deps]
@@ -25,7 +25,7 @@ ValueShapes = "136a8f8c-c49b-4edb-8b98-f3d64d48be8f"
 
 [compat]
 ArraysOfArrays = "0.5"
-Distributions = "0.23, 0.24"
+Distributions = "0.25"
 ForwardDiff = "0.10"
 IntervalSets = "0.5"
 LsqFit = "0.11, 0.12"
@@ -38,7 +38,7 @@ SpecialFunctions = "0.10, 1.0"
 StatsBase = "0.33"
 Tables = "1.2"
 TypedTables = "1.2"
-ValueShapes = "0.7, 0.8"
+ValueShapes = "0.10"
 julia = "1.3"
 
 [extras]

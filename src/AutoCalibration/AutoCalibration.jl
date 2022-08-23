@@ -79,7 +79,7 @@ function _filter_peaks_from_peakfinder(h::Histogram{<:Real, 1}, peakPositions::V
         push!(pfits, fit)
     end
     d = map(i -> abs(pfits[i].fitted_parameters[3] - peakPositions[i]), eachindex(peakPositions));
-    σs = map(i -> abs(pfits[i].fitted_parameters[2]), eachindex(peakPositions));   
+    σs = map(i -> abs(pfits[i].fitted_parameters[2]), eachindex(peakPositions));
     hd = harmmean(d);
     hσ = harmmean(σs);
     accepted_peakPositions = T[]
@@ -96,13 +96,19 @@ function determine_calibration_constant_through_peak_ratios(h::Histogram{<:Real,
             min_n_peaks::Int = length(photon_lines), max_n_peaks::Int = 5 * length(photon_lines), threshold::Real = 10., α::Real = 0.01, σ::Real = 3.0, rtol::Real = 5e-3) where {E}
     h_deconv, peakPositions = peakfinder(h, threshold=threshold, σ = σ)
     fitted_peak_Positions = _filter_peaks_from_peakfinder(h, peakPositions, σ)
+    @info fitted_peak_Positions
     while length(fitted_peak_Positions) > max_n_peaks
         threshold *= 1.1
+        #@info fitted_peak_Positions
+        #@info "increasing to ", threshold
         h_deconv, peakPositions = peakfinder(h, threshold=threshold, σ = σ)
         fitted_peak_Positions = _filter_peaks_from_peakfinder(h, peakPositions, σ)
     end
     while length(fitted_peak_Positions) < min_n_peaks
         threshold *= 0.75
+        threshold < 1e-6 ? error("threshold is smaller than 1e-6 and the minimum number of peaks was not reached. Try a different σ.") : nothing
+        #@info fitted_peak_Positions
+        #@info "decreasing to ", threshold
         h_deconv, peakPositions = peakfinder(h, threshold=threshold, σ = σ)
         fitted_peak_Positions = _filter_peaks_from_peakfinder(h, peakPositions, σ)
     end

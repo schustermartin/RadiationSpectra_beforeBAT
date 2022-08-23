@@ -2,7 +2,7 @@
 
 __precompile__(true)
 
-module RadiationSpectra
+module RadiationSpectra_beforeBAT
 
 using DelimitedFiles
 using LinearAlgebra
